@@ -6,37 +6,6 @@
 <title>GreenHorizon Solar | Save on Electricity Bills</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-<!-- ═══════════════════════════════════════════
-     GOOGLE / META ADS TRACKING PIXELS
-     Replace XXXXXXXXXX with your real IDs
-════════════════════════════════════════════ -->
-
-<!-- Google tag (gtag.js) — replace G-XXXXXXXXXX with your GA4 ID -->
-<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX');
-  // Google Ads conversion — replace AW-XXXXXXXXXX/YYYYYYY with your conversion ID/label
-  gtag('config', 'AW-XXXXXXXXXX');
-</script> -->
-
-<!-- Meta Pixel — replace XXXXXXXXXXXXXXXXXX with your Pixel ID -->
-<!-- <script>
-  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window,document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', 'XXXXXXXXXXXXXXXXXX');
-  fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-  src="https://www.facebook.com/tr?id=XXXXXXXXXXXXXXXXXX&ev=PageView&noscript=1"/></noscript> -->
-
 <style>
 /* ════════════════════════════════════════════
    RESET & ROOT
@@ -365,7 +334,7 @@ footer a{color:var(--gold);text-decoration:none;font-size:.75rem}
     <a href="#reviews">Reviews</a>
   </nav>
   <div class="hd-right">
-    <a href="tel:+919009026829" class="btn-call" onclick="trackCall('header')">📞 +91 90090 26829</a>
+    <a href="tel:+919009026829" class="btn-call">📞 +91 90090 26829</a>
     <button class="btn-quote" onclick="scrollToForm()">Get Free Quote</button>
     <div class="burger" id="burger" onclick="toggleMob()">
       <span></span><span></span><span></span>
@@ -547,7 +516,7 @@ footer a{color:var(--gold);text-decoration:none;font-size:.75rem}
       </div>
       <div class="cta-pair">
         <button class="btn-green" onclick="scrollToForm()">Book Free Site Survey</button>
-        <a href="tel:+919009026829" class="btn-gold-outline" onclick="trackCall('convince_section')">📞 Talk to an Expert</a>
+        <a href="tel:+919009026829" class="btn-gold-outline">📞 Talk to an Expert</a>
       </div>
     </div>
   </div>
@@ -605,100 +574,47 @@ footer a{color:var(--gold);text-decoration:none;font-size:.75rem}
   <p class="rv d1">No pressure. No cost. Just real numbers for your home or business.</p>
   <div class="bcta-btns rv d2">
     <button class="btn-gold-solid" onclick="scrollToForm()">☀ Get Free Consultation Now</button>
-    <a href="tel:+919009026829" class="btn-white-outline" onclick="trackCall('bottom_cta')">📞 Call Now: +91 90090 26829</a>
+    <a href="tel:+919009026829" class="btn-white-outline">📞 Call Now: +91 90090 26829</a>
   </div>
 </section>
 
 <!-- ══ FOOTER ════════════════════════════════════════ -->
 <footer>
   <p>© 2026 GreenHorizon Solar. All rights reserved.</p>
-  <a href="tel:+919009026829" onclick="trackCall('footer')">📞 +91 90090 26829</a>
+  <a href="tel:+919009026829">📞 +91 90090 26829</a>
 </footer>
 
 <!-- ══ STICKY CALL ════════════════════════════════════ -->
-<a href="tel:+919009026829" class="sticky-call" onclick="trackCall('sticky_button')">
+<a href="tel:+919009026829" class="sticky-call">
   <div class="s-ic">📞</div>
   <span class="call-txt">Call Now</span>
 </a>
 
 <script>
 /* ════════════════════════════════════════════════════════
-   CONFIG — edit only this block
+   GOOGLE SHEETS — Apps Script Web App URL
 ════════════════════════════════════════════════════════ */
-const GS_URL = 'https://script.google.com/macros/s/AKfycbyjY1bB9n7D-UOIXXfiNIaQFs3vxUzpboQtItKNdPkPld64a-K0gj52kMn4Sm5yc6h6/exec';
+const GS_URL = 'https://script.google.com/macros/s/AKfycbw9efz9AkQXq0OiVjSusuGqeavZWTiaa5E6lMQgNL1rPHkUCOSiRH_FGpCXrK5GzBIT/exec';
 
-// Replace with your real IDs to enable tracking
-const GA4_ID      = '';   // e.g. 'G-XXXXXXXXXX'
-const GADS_ID     = '';   // e.g. 'AW-XXXXXXXXXX'
-const GADS_LABEL  = '';   // e.g. 'AbCdEfGhIj'
-const META_PX_ID  = '';   // e.g. '123456789012345'
+/*
+  HOW THIS WORKS:
+  Apps Script cannot receive JSON via no-cors fetch.
+  The ONLY reliable method without a backend is:
+    → Build a URL with query params and load it via <img> or <script> tag (GET request)
+  This bypasses CORS entirely and Apps Script reads e.parameter.xxx perfectly.
+  Your Apps Script doGet(e) must read e.parameter.name, e.parameter.phone, etc.
+*/
+function sendToSheets(params) {
+  // Build query string from params object
+  const qs = Object.keys(params)
+    .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
+    .join('&');
 
-/* ════════════════════════════════════════════════════════
-   AD TRACKING — UTM + gclid + fbclid capture
-════════════════════════════════════════════════════════ */
-function getURLParam(key) {
-  return new URLSearchParams(window.location.search).get(key) || '';
-}
-
-const TRACK = {
-  utm_source   : getURLParam('utm_source'),
-  utm_medium   : getURLParam('utm_medium'),
-  utm_campaign : getURLParam('utm_campaign'),
-  utm_content  : getURLParam('utm_content'),
-  utm_term     : getURLParam('utm_term'),
-  gclid        : getURLParam('gclid'),
-  fbclid       : getURLParam('fbclid'),
-  referrer     : document.referrer || 'direct',
-  landing_url  : window.location.href,
-  device       : /Mobi|Android/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop',
-};
-
-// Persist UTMs in sessionStorage so they survive form scroll
-Object.keys(TRACK).forEach(k => {
-  if(TRACK[k]) sessionStorage.setItem('gh_' + k, TRACK[k]);
-  else if(sessionStorage.getItem('gh_' + k)) TRACK[k] = sessionStorage.getItem('gh_' + k);
-});
-
-/* ════════════════════════════════════════════════════════
-   CALL TRACKING
-════════════════════════════════════════════════════════ */
-function trackCall(location) {
-  // Google Ads call conversion
-  if(GADS_ID && GADS_LABEL && typeof gtag !== 'undefined') {
-    gtag('event', 'conversion', {
-      send_to: `${GADS_ID}/${GADS_LABEL}`,
-      value: 1.0,
-      currency: 'INR'
-    });
-  }
-  // GA4 event
-  if(GA4_ID && typeof gtag !== 'undefined') {
-    gtag('event', 'call_click', { call_location: location });
-  }
-  // Meta Pixel
-  if(META_PX_ID && typeof fbq !== 'undefined') {
-    fbq('track', 'Contact', { call_location: location });
-  }
-  // Log to Google Sheets
-  sendToSheets({
-    type        : 'Call Click',
-    call_from   : location,
-    timestamp   : new Date().toISOString(),
-    ...TRACK
-  });
-}
-
-/* ════════════════════════════════════════════════════════
-   SEND TO GOOGLE SHEETS
-════════════════════════════════════════════════════════ */
-function sendToSheets(data) {
-  // Use no-cors fetch — response will be opaque but data will arrive
-  fetch(GS_URL, {
-    method  : 'POST',
-    mode    : 'no-cors',
-    headers : { 'Content-Type': 'application/json' },
-    body    : JSON.stringify(data)
-  }).catch(() => {}); // silent fail — don't break UX
+  // Use Image beacon trick — fires a GET request, no CORS issue, no response needed
+  const img = new Image();
+  img.src = GS_URL + '?' + qs;
+  // Fallback: also try fetch GET (works when page is served over https)
+  fetch(GS_URL + '?' + qs, { method: 'GET', mode: 'no-cors' }).catch(() => {});
 }
 
 /* ════════════════════════════════════════════════════════
@@ -719,64 +635,36 @@ function doSubmit(e) {
   const btn   = document.getElementById('submitBtn');
 
   // Validate
-  if(!name)              { msgEl.innerHTML = '<span class="err">⚠ Please enter your name.</span>'; return; }
-  if(phone.length !== 10){ msgEl.innerHTML = '<span class="err">⚠ Enter a valid 10-digit number.</span>'; return; }
-  if(!bill)              { msgEl.innerHTML = '<span class="err">⚠ Please select your bill range.</span>'; return; }
-  if(!ptype)             { msgEl.innerHTML = '<span class="err">⚠ Please select property type.</span>'; return; }
+  if(!name)               { msgEl.innerHTML = '<span class="err">⚠ Please enter your name.</span>';           return; }
+  if(phone.length !== 10) { msgEl.innerHTML = '<span class="err">⚠ Enter a valid 10-digit number.</span>';   return; }
+  if(!bill)               { msgEl.innerHTML = '<span class="err">⚠ Please select your bill range.</span>';   return; }
+  if(!ptype)              { msgEl.innerHTML = '<span class="err">⚠ Please select property type.</span>';     return; }
 
   btn.textContent = '⏳ Submitting…';
   btn.disabled    = true;
+  msgEl.innerHTML = '';
 
-  const timestamp = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+  const timestamp = new Date().toLocaleString('en-IN', {
+    timeZone    : 'Asia/Kolkata',
+    day         : '2-digit',
+    month       : '2-digit',
+    year        : 'numeric',
+    hour        : '2-digit',
+    minute      : '2-digit',
+    second      : '2-digit',
+    hour12      : true
+  });
 
-  // Full payload to Google Sheets
-  const payload = {
-    type         : 'Lead',
-    timestamp    : timestamp,
-    name         : name,
-    phone        : phone,
-    bill         : bill,
-    property_type: ptype,
-    // Ad tracking
-    utm_source   : TRACK.utm_source   || 'organic',
-    utm_medium   : TRACK.utm_medium   || '',
-    utm_campaign : TRACK.utm_campaign || '',
-    utm_content  : TRACK.utm_content  || '',
-    utm_term     : TRACK.utm_term     || '',
-    gclid        : TRACK.gclid        || '',
-    fbclid       : TRACK.fbclid       || '',
-    referrer     : TRACK.referrer     || 'direct',
-    landing_url  : TRACK.landing_url  || window.location.href,
-    device       : TRACK.device       || 'Unknown',
-  };
+  // Send to Google Sheets via GET params
+  sendToSheets({
+    timestamp     : timestamp,
+    name          : name,
+    phone         : phone,
+    bill          : bill,
+    property_type : ptype,
+  });
 
-  // Send to Google Sheets
-  sendToSheets(payload);
-
-  // Fire conversion events
-  if(GADS_ID && GADS_LABEL && typeof gtag !== 'undefined') {
-    gtag('event', 'conversion', {
-      send_to  : `${GADS_ID}/${GADS_LABEL}`,
-      value    : 1.0,
-      currency : 'INR'
-    });
-  }
-  if(GA4_ID && typeof gtag !== 'undefined') {
-    gtag('event', 'generate_lead', {
-      currency: 'INR', value: 1,
-      name, phone, bill, property_type: ptype,
-      source: TRACK.utm_source || 'organic'
-    });
-  }
-  if(META_PX_ID && typeof fbq !== 'undefined') {
-    fbq('track', 'Lead', {
-      content_name: 'Solar Consultation',
-      content_category: ptype,
-      value: 1, currency: 'INR'
-    });
-  }
-
-  // Show success after a small delay (sheets call is async)
+  // Show success message
   setTimeout(() => {
     msgEl.innerHTML = `<span class="ok">✅ Thank you, ${name}! Our expert will call +91&nbsp;${phone} within 2 hours.</span>`;
     document.getElementById('leadForm').reset();
