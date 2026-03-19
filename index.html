@@ -594,7 +594,7 @@ footer a{color:var(--gold);text-decoration:none;font-size:.75rem}
 /* ════════════════════════════════════════════════════════
    GOOGLE SHEETS — Apps Script Web App URL
 ════════════════════════════════════════════════════════ */
-const GS_URL = 'https://script.google.com/macros/s/AKfycbw9efz9AkQXq0OiVjSusuGqeavZWTiaa5E6lMQgNL1rPHkUCOSiRH_FGpCXrK5GzBIT/exec';
+const GS_URL = 'https://script.google.com/macros/s/AKfycbyjY1bB9n7D-UOIXXfiNIaQFs3vxUzpboQtItKNdPkPld64a-K0gj52kMn4Sm5yc6h6/exec';
 
 /*
   HOW THIS WORKS:
@@ -610,11 +610,9 @@ function sendToSheets(params) {
     .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))
     .join('&');
 
-  // Use Image beacon trick — fires a GET request, no CORS issue, no response needed
+  // Single Image beacon GET — Apps Script reads e.parameter.xxx perfectly, no CORS issue
   const img = new Image();
   img.src = GS_URL + '?' + qs;
-  // Fallback: also try fetch GET (works when page is served over https)
-  fetch(GS_URL + '?' + qs, { method: 'GET', mode: 'no-cors' }).catch(() => {});
 }
 
 /* ════════════════════════════════════════════════════════
